@@ -26,27 +26,31 @@ init:
 
 label start:
 
-    # Show a background.
+    # Draws a background.
 
     scene opening_classroom
 
-    # This shows a character sprite.
-
-    # These display lines of dialogue.
+    # Shows a character sprite.
 
     show protag neutral
 
+    # These display lines of dialogue.
+    # "p" is used here because I want the protagonist to speak
+    # (p is defined as the character named "Dan" on line 4)
+
     p "{i}You know, maybe getting a LOP wasn’t so bad after all.{/i}"
-    p "{i}I get time to study for upcoming tests, catch up on homework.{/i}"
+    p "{i}I get time to study for upcoming tests and catch up on homework...{/i}"
     p "{i}And best of all, I finally get some peace and quiet!{/i}"
-    p "{i}But where to start? I have notes due in history, a test in Calculus, a group project in English…{/i}"
+    p "{i}But where to start? I have notes due in history, a test in Calculus,
+        a group project in English…{/i}"
     p "{i}Maybe I’ll start by organizing all my homework...{/i}"
 
 
     show protag neutral
     with fade
 
-    p "{i}Okay, everything is in order. It’s time to study! I think I’ll start with…{/i}"
+    p "{i}Okay, everything is in order. It’s time to study! I think I’ll start
+        with…{/i}"
 
     menu:
 
@@ -62,6 +66,8 @@ label start:
 
 
 label history_homework:
+    # ren'py require "$"s before python code that isn't in ren'py by default
+    # the $ is used here to tell ren'py to use python to declare a variable
     $ homework = "history"
 
     p "{i}History will probably take the most time. I’ll start with this.{/i}"
@@ -75,7 +81,8 @@ label history_homework:
 label calculus_homework:
     $ homework = "calculus"
 
-    p "{i}I should probably brush up on my derivative and integrals before the test tomorrow.{/i}"
+    p "{i}I should probably brush up on my derivative and integrals before the
+        test tomorrow.{/i}"
 
     scene desk calculus
 
@@ -85,7 +92,8 @@ label calculus_homework:
 
 label english_homework:
     $ homework = "english"
-    p "{i}I don't want my group members to think I'm slacking off. I'll contribute to the project first.{/i}"
+    p "{i}I don't want my group members to think I'm slacking off. I'll
+        contribute to the project first.{/i}"
 
     scene desk english
 
@@ -101,7 +109,8 @@ label tired:
 
     scene clock 1100
 
-    p "{i}Wow, it’s only been 10 minutes! I have 50 minutes of productivity remaining.{/i}"
+    p "{i}Wow, it’s only been 10 minutes! I have 50 minutes of productivity
+        remaining.{/i}"
     p "{i}Now that I think about it, I am kinda tired…{/i}"
     p "{i}Maybe I’ll take a 5 minute nap before I start.{/i}"
 
@@ -130,7 +139,8 @@ label tired:
         scene desk english
         with fade
 
-    p scared "AAH! I’m sorry, I must have napped too long! I need to run to Physics!"
+    p scared "AAH! I’m sorry, I must have napped too long! I need to run to
+        Physics!"
 
     scene opening_classroom
 
@@ -167,7 +177,8 @@ label tired:
     l "Because of the trial, bro! Remember?"
     l " You said we would figure it out today, at 11:10…"
     p "Oh, sorry, I completely forgot."
-    l "Bro, I was looking all over for you. If you’re gonna cancel a meeting for nap time, could you at least let me know in advance?"
+    l "Bro, I was looking all over for you. If you’re gonna cancel a meeting
+        for nap time, could you at least let me know in advance?"
     p "Sorry, sorry."
 
     scene lop_teacher_desk
@@ -175,7 +186,8 @@ label tired:
     play music muffled_rock
     pause
 
-    p "Excuse me, can I leave early? I have a meeting to go to. I can make this up next week."
+    p "Excuse me, can I leave early? I have a meeting to go to. I can make this
+        up next week."
     lop_teacher "..."
     lop_teacher "..."
     p "{i}She seems busy...{/i}"
