@@ -16,22 +16,31 @@ blue = [0, 0, 128]
 green = [0, 255, 0]
 white = [255, 255, 255]
 
+
+def line_to_code(line):
+    line = line.strip()
+    if line == '':
+        code = {'type': None}
+    elif line == 'END':
+        code = {'type': 'END'}
+    elif line[0] == '{':
+        code = {'type': 'background', 'image': line[1:-1]}
+    else:
+        components = line.split(': ')
+        code = {'type': 'speech', 'nick': components[0], 'line': components[1]}
+
+    return code
+
+
 # store the text file into a list
 with open('lines.txt', 'r') as fin:
-    lines_raw = list(map(lambda x: x.strip().split(': '), fin.readlines()))
-    lines = []
-    for line in lines_raw:
-        if line == ['']:
-            lines.append(None)
-        elif line == ['END']:
-            lines.append('END')
-        else:
-            lines.append({'nick': line[0], 'line': line[1]})
+    lines = list(map(line_to_code, fin.readlines()))
 
 
 # draw some text into an area of a surface
 # automatically wraps words
 # returns any text that didn't get blitted
+# LINK IN CITATIONS
 def draw_text(surface, text, color, rect, font, aa=False, bkg=None):
     rect = pygame.Rect(rect)
     y = rect.top
@@ -71,9 +80,14 @@ def draw_text(surface, text, color, rect, font, aa=False, bkg=None):
     return text
 
 
+backgrounds = []
+
+
 class Background(pygame.sprite.Sprite):
-    def __init__(self, image, location):
+    def __init__(self, name, image, location):
         pygame.sprite.Sprite.__init__(self)
+        backgrounds.append(self)
+        self.name = name
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
         self.rect.left, self.rect.top = location
@@ -86,9 +100,9 @@ class Textbox:
         self.name_color = name_color
 
         text_font_size = int(7 * self.height / 24)
-        name_font_size = int(7 * self.height / 24)
-        self.text_font = pygame.font.Font('freesansbold.ttf', text_font_size)
-        self.name_font = pygame.font.Font('freesansbold.ttf', name_font_size)
+        name_font_size = int(7 * self.height / 48)
+        self.text_font = pygame.font.Font('fnt/nasalization-rg.ttf', text_font_size)
+        self.name_font = pygame.font.Font('fnt/nasalization-rg.ttf', name_font_size)
 
         # declare variables which will later store text surfaces
         self.x = None
@@ -142,28 +156,50 @@ class Character:
             textbox.name = self.name
 
 
-def draw_scene(scene_number):
-    current_line = lines[scene_number]
-    current_nick = current_line['nick']
-    current_text = current_line['line']
+def change_scene():
 
-    current_character = None
+    global someone_speaking
+    global scene
 
-    for character in characters:
-        if character.nick == current_nick:
-            current_character = character
-            break
+    code = lines[scene]
 
-    if current_character is None:
-        print('You messed up, there\'s no valid speaker')
+    someone_speaking = False
+
+    if code['type'] == 'background':
+        global current_background
+        # background_name = code[1:-1]
+        background_name = code['image']
+        for background in backgrounds:
+            if background.name == background_name:
+                current_background = background
+        scene += 1
+        code = lines[scene]
+
+    if code['type'] == 'END':
         pygame.quit()
         quit()
 
-    else:
-        current_character.say(current_text)
+    if code['type'] == 'speech':
+        current_line = lines[scene]
+        current_nick = current_line['nick']
+        current_text = current_line['line']
 
-    global someone_speaking
-    someone_speaking = True
+        current_character = None
+
+        for character in characters:
+            if character.nick == current_nick:
+                current_character = character
+                break
+
+        if current_character is None:
+            print('You messed up, there\'s no valid speaker')
+            pygame.quit()
+            quit()
+
+        else:
+            current_character.say(current_text)
+
+        someone_speaking = True
 
 protag = Character('Protag', 'P')
 larry = Character('Larry', 'C')
@@ -182,11 +218,11 @@ def get_keys(new_event):
 
 
 # define images
-pixel_magnet = Background('img/PixelMagnet.jpg', [0, 0])
+pixel_magnet = Background('pixel_magnet', 'img/PixelMagnet.jpg', [0, 0])
 pixel_magnet.image = pygame.transform.scale(pixel_magnet.image, (display_w, display_h))
-opening_classroom = Background('img/opening_classroom.jpg', [0, 0])
+opening_classroom = Background('opening_classroom', 'img/opening_classroom.jpg', [0, 0])
 opening_classroom.image = pygame.transform.scale(opening_classroom.image, (display_w, display_h))
-black = Background('img/black.jpg', [0, 0])
+black = Background('black', 'img/black.jpg', [0, 0])
 black.image = pygame.transform.scale(black.image, (display_w, display_h))
 
 done = False
@@ -196,11 +232,12 @@ enter = False
 scene = 0
 someone_speaking = False
 
+current_background = pixel_magnet
+
+
 while not done:
 
     # draw the background
-    current_background = pixel_magnet
-
     screen.blit(current_background.image, current_background.rect)
 
     for event in pygame.event.get():
@@ -218,20 +255,8 @@ while not done:
 
     if 'return' in just_pressed:
         scene += 1
-        if lines[scene] is None:
-            current_line = None
-            current_nick = None
-            current_text = None
-            current_character = None
 
-            someone_speaking = False
-
-        elif lines[scene] == 'END':
-            pygame.quit()
-            quit()
-
-        else:
-            draw_scene(scene)
+        change_scene()
 
     if someone_speaking:
         textbox1.write()

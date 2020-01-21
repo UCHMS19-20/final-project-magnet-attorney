@@ -4,4 +4,7 @@ P: I get some time to study for upcoming tests and catch up on all my homework, 
 P: And best of all, I finally get some peace and quiet!
 P: But where to start? I have notes due in history, a test in Calculus, a group project in English...
 P: Maybe I'll start by organizing all my homework.
+{opening_classroom}
+P: Okay, everything is in order. It's time to study! I think I'll start with...
+
 END
