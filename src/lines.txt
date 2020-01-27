@@ -6,5 +6,30 @@ P: But where to start? I have notes due in history, a test in Calculus, a group 
 P: Maybe I'll start by organizing all my homework.
 {opening_classroom}
 P: Okay, everything is in order. It's time to study! I think I'll start with...
+{pixel_magnet}
 
+CHOICE 3
+- History Notes (hist)
+- Calculus Test (calc)
+- English Project (eng)
+[hist] P: History will probably take the most time. I'll start with that.
+[calc] P: Hmm... I should probably brush up on my derivatives and integrals before the test tomorrow.
+[eng] P: I don't want my group mates to think I'm slacking off! I'll get a head start on the project.
+P: Phew, I've organized everything and it's time to start!
+P: I wonder what time it is...
+{clock}
+
+P: Wow, it's only been 10 minutes!
+P: I have 50 minutes of productivity remaining.
+P: Now that I think about it, I am kinda tired...
+P: Maybe I'll just take a 5 minute nap before I start!
+P: Yeah, that's right! I'll get so much more done if I take a break to nap.
+P: *closes eyes*
+{black}
+P: *sleepy sleepy*
+???: *muffled noises*
+P: *sleepy sleepy*
+C: Bro, wake up!!
+
+???: To be continued...
 END
