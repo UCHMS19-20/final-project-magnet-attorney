@@ -6,7 +6,7 @@
 
 The submitted code reads text from the "lines.txt" file, turns it into data structures, and interprets it.
 
-Feel free to mess around with the "lines.txt" file in accordance with the syntax laid out in the docstring at the top of the "main.py" file. However, not altering the text file alone will not allow you to add any new characters (other than Protag: P, Larry: C, and ???: ???), add new background images, or change the color of the text or textboxes.
+Feel free to mess around with the "lines.txt" file in accordance with the syntax laid out in the docstring at the top of the "main.py" file. However, note that altering the text file alone will not allow you to add any new characters (other than Protag: P, Larry: C, and ???: ???), add new background images, or change the color of the text or textboxes.
 
 ## Sources
 
